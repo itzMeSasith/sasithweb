@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sasith Nimsara - Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary: #06b6d4;
+            --secondary: #3b82f6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #f1f5f9;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            transition: all 0.5s ease;
+        }
+
+        body.light-mode {
+            background-color: var(--light);
+            color: var(--text-dark);
+        }
+
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .light-mode nav {
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #b4d1d6;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        #theme-toggle {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        #theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            padding-top: 80px;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .hero .accent {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .specialty {
+            font-size: 20px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.2);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translateY(0);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .social-links a {
+            color: inherit;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .hero-image img {
+            width: 300px; 
+            height: auto;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: translateY(-10px);
+        }
+
+        .section {
+            padding: 8rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-info {
+            transform: translateY(0);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+            padding: 3rem;
+            border-radius: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 120px;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-image img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+footer {
+    background: #031f3f;
+    color: var(--text-light);
+    padding: 4rem 5%;
+    margin-top: 5rem;
+    transition: all 0.3s ease;
+}
+
+footer.light-mode {
+    background: var(--light);
+    color: var(--text-dark);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.footer-section ul {
+    list-style: none;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.footer-section ul li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-section .social-links a {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.footer-section .social-links a:hover {
+    color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+footer.light-mode .footer-bottom {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+#about p {
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.8;
+}
+#typed-name {
+    display: flexbox;
+    font-size: 4rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 4px solid var(--primary);
+    width: 0;
+    animation: typing 3s steps(20) 1s forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">SN Portfolio.</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+                <button id="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hello, I am<br><span class="accent" id="typed-name"></span></h1>
+            <p class="specialty accent" id="specialty">Web Developer | Game developer | Software Developer</p>
+            <button class="cta-button">Download CV</button>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="mailto:sasithnimsara27@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="Untitled design (8).png" alt="Profile">
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About Me</h2>
+        <p>Hello! I’m a dedicated game developer, web developer, and software engineer with a passion for building immersive digital experiences and robust software solutions. With a versatile skill set that spans game design, front-end and back-end web development, and software engineering, I thrive on creating projects that blend creativity and functionality.<br><br>
+
+I’ve worked on projects ranging from dynamic websites and interactive games to complex software applications, always focusing on user experience and performance. My approach combines strong technical foundations with a drive for innovation, allowing me to bring unique ideas to life while meeting practical needs. I believe in writing clean, efficient code and enjoy collaborating to solve complex challenges.<br><br>
+
+When I’m not working on my projects, I love exploring the latest in tech and gaming, refining my skills, and finding new inspiration. Let’s connect and explore what we can build together!</p>
+    </section>
+
+    <section id="services" class="section">
+        <h2 class="section-title">My Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Web Development</h3>
+                <p>Creating responsive, modern websites with cutting-edge technologies</p>
+            </div>
+            <div class="service-card">
+                <h3>3D Model & Assets Design</h3>
+                <p>Crafting detailed 3D models and assets for games and applications</p>
+            </div>
+            <div class="service-card">
+                <h3>Software Development</h3>
+                <p>Building robust, scalable software solutions</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section">
+        <h2 class="section-title">Latest Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <img src="Untitled design.png" alt="Hotel Booking Website">
+                <div class="project-info">
+                    <h3>Hotel Booking Website</h3>
+                    <p>A modern hotel booking platform with seamless reservation system.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="Untitled design (2).png" alt="Construction Company Website">
+                <div class="project-info">
+                    <h3>Construction Company Website</h3>
+                    <p>Professional website for a leading construction company.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="Untitled design (3).png" alt="Two Falls">
+                <div class="project-info">
+                    <h3>Two Falls</h3>
+                    <p>Epic fantasy game with unique combat mechanics.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="RUN in.png" alt="RUN in DARK">
+                <div class="project-info">
+                    <h3>RUN in DARK</h3>
+                    <p>Thrilling survival horror game with atmospheric design.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="Untitled design (7).png" alt="Delivery Service App">
+                <div class="project-info">
+                    <h3>Food Delivery Service App</h3>
+                    <p>Mobile application for efficient food delivery management.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="Untitled design (5).png" alt="Student Management System">
+                <div class="project-info">
+                    <h3>Student Management System</h3>
+                    <p>Comprehensive system for educational institutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact Me</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <p>Primary: 0768904853</p>
+                        <p>Secondary: 0710209471</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>sasithnimsara27@gmail.com</p>
+                </div>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea rows="4" placeholder="Your Message"></textarea>
+                <button class="cta-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <ul>
+                <li><i class="fas fa-phone"></i> Primary: 0768904853</li>
+                <li><i class="fas fa-phone"></i> Secondary: 0710209471</li>
+                <li><i class="fas fa-envelope"></i> sasithnimsara27@gmail.com</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Follow Me</h3>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:sasithnimsara27@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>About</h3>
+            <p>I'm a web developer, game developer, and software engineer passionate about creating beautiful and functional digital experiences. Let's collaborate on exciting projects!</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Sasith Nimsara | All Rights Reserved</p>
+    </div>
+</footer>
+
+
+<script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Check if the theme preference is stored in localStorage
+    if (localStorage.getItem('theme') === 'light') {
+        body.classList.add('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Set to moon icon for light mode
+    } else {
+        body.classList.remove('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Set to sun icon for dark mode
+    }
+
+    // Toggle between dark and light mode
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+
+        // Update the theme in localStorage
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for light mode
+        } else {
+            localStorage.setItem('theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for dark mode
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const typedName = "Sasith Nimsara.";
+    const nameElement = document.getElementById("typed-name");
+
+    let index = 0;
+    const typingSpeed = 30; // Speed in milliseconds
+
+    function type() {
+        if (index < typedName.length) {
+            nameElement.textContent += typedName.charAt(index);
+            index++;
+            setTimeout(type, typingSpeed);
+        }
+    }
+
+    type();
+});
+
+</script>
